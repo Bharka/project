@@ -1,0 +1,47 @@
+Name:Bharka Ramesh Anandani
+UHID:1606573
+Email:banandani@uh.edu
+
+CLient Upload:
+
+	CLient accepts a file from command line argument and uses base-64 encoding and encodes the data and uses json to interact with server by using sockets.
+	It establishes a connection along server port and host and sends data along that connection.
+
+Server distributes file to other servers: 
+	Each server has a json file called serverList. This contains the port number and host details of other two servers.
+	When a server recieves a file from client, a call to allservers method is made. Here we make a call to each server method.
+	Using these two method the client file is distributed to other servers.
+
+Server1:
+	Has a json file containing details of other servers(Server 2& Server 3).This is used to forward client file to other servers.
+	This responds to the price info API calls along with server info API calls
+
+Server2:
+	Has a json file containing details of other servers(Server 1 & Server3).This is used to forward client file to other servers.
+	This responds to server info API calls
+
+
+
+Server3:
+	Has a json file containing details of other servers(Server 1 & Server2).This is used to forward client file to other servers.
+	This responds to server info API calls
+
+
+API CALLS:
+
+	SERVER API
+
+		GET REQUEST 
+			curl http://127.0.0.1:32542/serversDetails
+		SET REquest
+			curl -H "Content-Type: application/json" -X POST -d '{"Servers":[{"port" : "21609","host" : "127.0.1.1"},{"port" : "21611","host" : "127.0.1.1"}]}' http://127.0.0.1:32542/setServerDetails
+
+
+PRICE API 
+
+	GET REQUEST 
+
+		curl http://127.0.0.1:21610/priceServers
+
+	POST REQUEST
+		curl -H "Content-Type: application/json" -X POST -d '{"Servers":[{"port" : "21609","host" : "127.0.1.1","price":"100"},{"port" : "21611","host" : "127.0.1.1","price":"100"}]}' http://127.0.0.1:32542/setpriceServers

@@ -79,7 +79,7 @@ while True:
         with open(sys.argv[1]) as i:
             data=json.load(i)
             print(data)
-        GETServer(serversFile,c)
+        GETServer(serversFile,conn)
         #c,addr =s.accept()
     elif(str(data1[0]).find('POST')!=-1 and ((find_url[1])[1:]).find('setServerDetails')!=-1):
         print("post data is ")
@@ -107,7 +107,7 @@ while True:
         while(data!=""):
             print("in while loop data is ",data)
             getting_data+=data
-            data=c.recv(1024)
+            data=conn.recv(1024)
         print ("the data which we got is ",getting_data)
         JsonData=json.loads(getting_data)
         print("this Json data",JsonData)
